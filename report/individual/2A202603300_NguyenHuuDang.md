@@ -2,7 +2,7 @@
 
 ## 1. Kết luận trước
 - **Thông tin chung:** MSSV `2A202603300`, task cá nhân `D13-2A202603300`, 10 frame: `s01f33`, `s01f58`, `s02f07`, `s02f30`, `s03f05`, `s03f59`, `s04f25`, `s04f46`, `s05f07`, `s05f26`. Hệ điều hành: Windows, trình duyệt: Google Chrome, phiên bản CVAT: v2.82.0.
-- **Tổng kết kết quả:** Đã vẽ tổng cộng **94 cuboid** trên cả 10 frame; hai frame ít nhất là `s01f33` và `s03f59` (5 cuboid mỗi frame) do mật độ phương tiện trong phạm vi 50 m thưa hơn. Phiếu tự kiểm (`selfcheck`) ghi nhận 19/94 cuboid có cảnh báo (chủ yếu do nới nhẹ bề rộng để bao trọn hai gương chiếu hậu của xe). Phần tin tưởng nhất là hướng đầu xe (`yaw_deg`) và độ cao đáy chạm mặt đường (`z_bottom`); phần còn yếu nhất là ước lượng chính xác chiều dài các xe đậu ở khoảng cách xa (> 35 m).
+- **Tổng kết kết quả:** Đã vẽ tổng cộng **96 cuboid** trên cả 10 frame (`s01f33` đạt 7 cuboid, các frame khác từ 5–15 cuboid); frame ít nhất là `s03f59` (5 cuboid) do mật độ phương tiện trong phạm vi 50 m thưa hơn. Phiếu tự kiểm (`selfcheck`) ghi nhận 20/96 cuboid có cảnh báo (chủ yếu do nới nhẹ bề rộng để bao trọn hai gương chiếu hậu của xe). Phần tin tưởng nhất là hướng đầu xe (`yaw_deg`) và độ cao đáy chạm mặt đường (`z_bottom`); phần còn yếu nhất là ước lượng chính xác chiều dài các xe đậu ở khoảng cách xa (> 35 m).
 
 - **Cách dùng CVAT:**
   - *Đổi góc nhìn:* Chuột trái giữ và kéo để xoay góc nhìn 3D (xoay thẳng từ trên nóc xuống để nhìn toàn cảnh Top-down view); chuột phải giữ và kéo để tịnh tiến (dời) góc nhìn; lăn con lăn chuột để phóng to/thu nhỏ; nháy đúp vào khoảng trống để reset về góc nhìn mặc định.
@@ -71,7 +71,7 @@ Số liệu lấy từ `submission/D13-2A202603300-bangA.csv` và cột `points_
 |---|---|---|---|---|---|---|---|
 | s01f58, idx 1, Car | -0.903 | 1.574 | -1.690 | 2.97 | 3.11 | 270.2° | Chạm đường chuẩn (lệch 0.01 m so với -1.7 m) |
 | s01f33, idx 1, Car | -0.965 | 1.581 | -1.755 | 9.15 | 9.20 | 271.9° | Chạm đường chuẩn (lệch 0.055 m so với -1.7 m) |
-| s02f30, idx 9, Car | -0.989 | 1.319 | -1.649 | 34.75 | 34.76 | 91.8° | Chạm mặt đường tại vị trí xa (~35 m, đường hơi dốc nhẹ) |
+| s02f30, idx 9, Car | -0.989 | 1.319 | -1.649 | 34.75 | 34.76 | 91.8° | Chạm mặt đường tại vị trí xa (~35 m); `selfcheck` báo cao hơn mặt đường 0.48 m do đường tại đó dốc nhẹ |
 
 - **(a) Cuboid gần nhất và xa nhất:**
   - Gần nhất: `s01f58, idx 1 (Car)` với `dist_m = 2.97 m`, khoảng cách 3D `r = 3.11 m`.
@@ -95,8 +95,8 @@ Mật độ theo khoảng cách (4 cuboid `Car` ở các `dist_m` khác nhau):
 - **Quy luật mật độ và tự kiểm:**
   - *Quy luật:* Khi khoảng cách tăng gấp khoảng 3 lần (từ `4.9 m` lên `15.0 m`), số điểm LiDAR trong hộp giảm khoảng 6 lần (từ `5005` xuống `832` điểm); lên `25.8 m` còn `208` điểm và đến `46.4 m` chỉ còn `72` điểm — bám rất sát đường cong suy giảm trung vị trên slide bài giảng (khoảng 1968 điểm ở 0–10 m, 718 ở 10–20 m, 214 ở 20–30 m, 72 ở 30–40 m).
   - *Các cuboid đã sửa sau `preview` / `selfcheck`:* (1) Sửa `s05f07 #1 Cyclist` từ trạng thái bị xoay ngang (`length < width`) thành dọc theo hướng xe (`2.67 x 1.24 m`); (2) Kéo đáy `s05f07 #13 Car` xuống mặt đường (trước đó bị lơ lửng `0.70 m`); (3) Nâng nhẹ đáy `s04f25 #13 Car` (trước đó hơi chìm `0.30 m`).
-  - *Các cảnh báo giữ nguyên:* Giữ nguyên một số cảnh báo bề rộng `width = 2.31–2.45 m` ở các xe SUV/bán tải cỡ lớn (`s02f30 #7`, `s04f25 #9`) vì cần bao trọn cả hai gương chiếu hậu chìa ra ngoài thân xe theo đúng guideline.
-- **Đổi kiểm:** Đã đối chiếu trực tiếp hai con số từ Bảng A (`s01f58 #1 Car`: `dist_m = 2.97 m`, `yaw_deg = 270.2°`; `s05f07 #3 Car`: `dist_m = 4.90 m`, `points_in = 5005`), số liệu giữa giao diện CVAT và file CSV khớp nhau 100%.
+  - *Các cảnh báo giữ nguyên:* Giữ nguyên một số cảnh báo bề rộng `width = 2.31–2.45 m` ở các xe SUV/bán tải cỡ lớn (`s02f30 #7`, `s04f25 #9`) vì cần bao trọn cả hai gương chiếu hậu chìa ra ngoài thân xe theo đúng guideline; giữ nguyên cảnh báo `ground_gap_m = 0.48 m` ở `s02f30 #9 Car` vì thực tế đáy hộp đã bám sát mặt đường dốc cục bộ tại khoảng cách xa ~35 m.
+- **Đổi kiểm:** Đã đối chiếu trực tiếp hai con số từ Bảng A (`s01f58 #1 Car`: `dist_m = 2.97 m`, `yaw_deg = 270.2°`; `s05f07 #3 Car`: `dist_m = 4.94 m`, `points_in = 5005`), số liệu giữa giao diện CVAT và file CSV khớp nhau 100%.
 
 ## 6. Ý nghĩa của nhãn, cách dùng AI và điều còn chưa chắc
 - **(a) Ý nghĩa đối với mô hình học máy:**

@@ -2,7 +2,7 @@
 
 ## 1. Kết luận trước
 - **Thông tin chung:** MSSV `2A202603300`, task cá nhân `D13-2A202603300`, 10 frame: `s01f33`, `s01f58`, `s02f07`, `s02f30`, `s03f05`, `s03f59`, `s04f25`, `s04f46`, `s05f07`, `s05f26`. Hệ điều hành: Windows, trình duyệt: Google Chrome, phiên bản CVAT: v2.82.0.
-- **Tổng kết kết quả:** Đã vẽ tổng cộng **96 cuboid** trên cả 10 frame (`s01f33` đạt 7 cuboid, các frame khác từ 5–15 cuboid); frame ít nhất là `s03f59` (5 cuboid) do mật độ phương tiện trong phạm vi 50 m thưa hơn. Phiếu tự kiểm (`selfcheck`) ghi nhận 20/96 cuboid có cảnh báo (chủ yếu do nới nhẹ bề rộng để bao trọn hai gương chiếu hậu của xe). Phần tin tưởng nhất là hướng đầu xe (`yaw_deg`) và độ cao đáy chạm mặt đường (`z_bottom`); phần còn yếu nhất là ước lượng chính xác chiều dài các xe đậu ở khoảng cách xa (> 35 m).
+- **Tổng kết kết quả:** Đã vẽ tổng cộng **97 cuboid** trên cả 10 frame (`s01f33` đạt 8 cuboid, các frame khác từ 5–15 cuboid); frame ít nhất là `s03f59` (5 cuboid) do mật độ phương tiện trong phạm vi 50 m thưa hơn. Phiếu tự kiểm (`selfcheck`) ghi nhận 20/97 cuboid có cảnh báo (chủ yếu do nới nhẹ bề rộng để bao trọn hai gương chiếu hậu của xe). Phần tin tưởng nhất là hướng đầu xe (`yaw_deg`) và độ cao đáy chạm mặt đường (`z_bottom`); phần còn yếu nhất là ước lượng chính xác chiều dài các xe đậu ở khoảng cách xa (> 35 m).
 
 - **Cách dùng CVAT:**
   - *Đổi góc nhìn:* Chuột trái giữ và kéo để xoay góc nhìn 3D (xoay thẳng từ trên nóc xuống để nhìn toàn cảnh Top-down view); chuột phải giữ và kéo để tịnh tiến (dời) góc nhìn; lăn con lăn chuột để phóng to/thu nhỏ; nháy đúp vào khoảng trống để reset về góc nhìn mặc định.
